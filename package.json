@@ -1,0 +1,20 @@
+{
+  "name": "ecpay-express",
+  "version": "0.0.1",
+  "description": "綠界物流服務",
+  "main": "index.js",
+  "scripts": {
+    "release": "standard-version"
+  },
+  "author": "Nick",
+  "license": "MIT",
+  "devDependencies": {
+    "husky": "^4.3.0",
+    "standard-version": "^9.0.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "php-cs-fixer fix . && git add ."
+    }
+  }
+}

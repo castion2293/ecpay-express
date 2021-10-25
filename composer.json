@@ -1,0 +1,39 @@
+{
+    "name": "thoth-pharaoh/ecpay-express",
+    "description": "綠界物流服務",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nick Zhang",
+            "email": "castion2293@yahoo.com.tw"
+        }
+    ],
+    "require": {
+        "php": "^7.3|^8.0",
+        "illuminate/support": "^8.6"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^6.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Pharaoh\\Express\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Pharaoh\\Express\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Pharaoh\\Express\\ExpressServiceProvider"
+            ],
+            "aliases": {
+                "Express": "Pharaoh\\Express\\Facades\\Express"
+            }
+        }
+    }
+}
