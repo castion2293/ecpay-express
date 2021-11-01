@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.8](https://github.com/castion2293/ecpay-express/compare/v0.0.7...v0.0.8) (2021-11-01)
+
+
+### Bug Fixes
+
+* 完成建立列印託運單連結([@nick](https://github.com/nick)) ([7d667f1](https://github.com/castion2293/ecpay-express/commit/7d667f1a4864232279f96723b7c5416b475bd565))
+
 ### [0.0.7](https://github.com/castion2293/ecpay-express/compare/v0.0.6...v0.0.7) (2021-11-01)
 
 
