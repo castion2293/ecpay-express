@@ -126,6 +126,33 @@ class ExpressService
     }
 
     /**
+     * 更新暫存物流訂單
+     *
+     * @param array $data
+     * @return array
+     * @throws ExpressException
+     */
+    public function updateTempTrade(array $data): array
+    {
+        try {
+            $this->requestData['Data']['ServerReplyURL'] = config('app.url') . '/express/server-reply';
+
+            $this->requestData['Data'] = $this->encryptData(array_merge($this->requestData['Data'], $data));
+
+            $responseData = $this->httpRequest('UpdateTempTrade');
+
+            // RtnCode !== 1 一律回傳錯誤
+            if (Arr::get($responseData, 'RtnCode') !== 1) {
+                throw new ExpressException(Arr::get($responseData, 'RtnMsg'));
+            }
+
+            return $responseData;
+        } catch (\Exception $exception) {
+            throw new ExpressException($exception->getMessage());
+        }
+    }
+
+    /**
      * HTTP請求
      *
      * @param string $method

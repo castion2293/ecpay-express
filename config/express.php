@@ -10,5 +10,5 @@ return [
     // HashIV
     'hash_iv' => env('EXPRESS_HASH_IV', 'v77hoKGq4kWxNNIS'),
     // 串接規格文件版號
-    'vision' => env('INVOICE_VISION', '1.0.0')
+    'vision' => env('EXPRESS_VISION', '1.0.0')
 ];

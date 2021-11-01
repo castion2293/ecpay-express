@@ -4,6 +4,7 @@ namespace Pharaoh\Express;
 
 use Illuminate\Routing\Middleware\ValidateSignature;
 use Illuminate\Support\Facades\Route;
+use Pharaoh\Express\Exceptions\ExpressException;
 use Pharaoh\Express\Http\Controllers\ExpressController;
 use Pharaoh\Express\Services\ExpressService;
 
@@ -61,6 +62,41 @@ class Express
      */
     public function createLogistics(array $data): string
     {
+        $dataRequiredFields = ['GoodsAmount', 'GoodsName', 'SenderName', 'SenderZipCode', 'SenderAddress'];
+
+        $this->checkRequiredFields($dataRequiredFields, $data);
+
         return $this->expressService->createLogistics($data);
+    }
+
+    /**
+     * 更新暫存物流訂單
+     *
+     * @param array $data
+     * @return array
+     * @throws Exceptions\ExpressException
+     */
+    public function updateTempTrade(array $data): array
+    {
+        $dataRequiredFields = ['TempLogisticsID'];
+
+        $this->checkRequiredFields($dataRequiredFields, $data);
+
+        return $this->expressService->updateTempTrade($data);
+    }
+
+    /**
+     * 檢查必填欄位
+     *
+     * @param array $requiredFields
+     * @param array $data
+     * @throws ExpressException
+     */
+    private function checkRequiredFields(array $requiredFields, array $data)
+    {
+        $requiredFields = array_diff($requiredFields, array_keys($data));
+        if (!empty($requiredFields)) {
+            throw new ExpressException('必填欄位: ' . implode(',', $requiredFields) . ' 未填入');
+        }
     }
 }

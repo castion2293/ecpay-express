@@ -14,7 +14,7 @@
         <tbody>
             @if (isset($TempLogisticsID))
                 <tr>
-                    <td class="table-active">綠界暫存物 流訂單編號</td>
+                    <td class="table-active">綠界暫存物流訂單編號</td>
                     <td>{{ $TempLogisticsID }}</td>
                 </tr>
             @endif
