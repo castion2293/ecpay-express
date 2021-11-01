@@ -47,6 +47,7 @@ class RouteServiceProvider extends ServiceProvider
 - [一段標測試資料產生(B2C)](#create-test-data)
 - [獲取開啟物流選擇頁連結](#create-logistics)
 - [更新暫存物流訂單](#update-temp-trade)
+- [建立正式物流訂單](#create-by-temp-trade)
 
 ### <a name="create-test-data">一段標測試資料產生(B2C)</a>
 ```bash
@@ -107,3 +108,13 @@ $express = Express::updateTempTrade($data);
 | ReceiverCellPhone | | 收件人手機 | String (20) | 若此參數有帶入值，將自動帶入物流選擇頁的對應欄位中 <br> 注意事項: <br> 只允許數字、10 碼且 09 開頭|
 | ReceiverPhone | | 收件人電話 | String (20) | 若此參數有帶入值，將自動帶入物流選擇頁的對應欄位中 |
 | ReceiverName | | 收件人姓名 | String (10) | 若此參數有帶入值，將自動帶入物流選擇頁的對應欄位中|
+
+### <a name="create-by-temp-trade">建立正式物流訂單</a>
+```bash
+$express = Express::createByTempTrade($tempLogisticsId);
+```
+
+#### $tempLogisticsId 內容說明
+參數 |  名稱 | 類型 | 說明 |
+| ------------|---|:----------------------- | :------|
+| LogisticsID | 綠界訂單編號 | String (20) | 請保存廠商交易編號與 LogisticsID 的關連 |

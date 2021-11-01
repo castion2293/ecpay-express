@@ -153,6 +153,33 @@ class ExpressService
     }
 
     /**
+     * 建立正式物流訂單
+     *
+     * @param string $tempLogisticsId
+     * @return array
+     * @throws ExpressException
+     */
+    public function createByTempTrade(string $tempLogisticsId): array
+    {
+        try {
+            $this->requestData['Data']['TempLogisticsID'] = $tempLogisticsId;
+
+            $this->requestData['Data'] = $this->encryptData($this->requestData['Data']);
+
+            $responseData = $this->httpRequest('CreateByTempTrade');
+
+            // RtnCode !== 1 一律回傳錯誤
+            if (Arr::get($responseData, 'RtnCode') !== 1) {
+                throw new ExpressException(Arr::get($responseData, 'RtnMsg'));
+            }
+
+            return $responseData;
+        } catch (\Exception $exception) {
+            throw new ExpressException($exception->getMessage());
+        }
+    }
+
+    /**
      * HTTP請求
      *
      * @param string $method

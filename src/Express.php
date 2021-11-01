@@ -86,6 +86,18 @@ class Express
     }
 
     /**
+     * 建立正式物流訂單
+     *
+     * @param string $tempLogisticsId
+     * @return array
+     * @throws ExpressException
+     */
+    public function createByTempTrade(string $tempLogisticsId): array
+    {
+        return $this->expressService->createByTempTrade($tempLogisticsId);
+    }
+
+    /**
      * 檢查必填欄位
      *
      * @param array $requiredFields
