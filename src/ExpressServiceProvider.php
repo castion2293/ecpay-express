@@ -11,6 +11,8 @@ class ExpressServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/express.php', 'express');
 
+        $this->loadViewsFrom(__DIR__ . '/Views', 'pharaoh_express');
+
         $this->publishes(
             [
                 __DIR__ . '/../config/express.php' => config_path('express.php')

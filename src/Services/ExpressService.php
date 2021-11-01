@@ -4,6 +4,7 @@ namespace Pharaoh\Express\Services;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\URL;
 use Pharaoh\Express\Exceptions\ExpressException;
 
 class ExpressService
@@ -13,14 +14,14 @@ class ExpressService
      *
      * @var array
      */
-    private array $settings = [];
+    private $settings = [];
 
     /**
      * 請求參數
      *
      * @var array
      */
-    private array $requestData = [];
+    private $requestData = [];
 
     public function __construct()
     {
@@ -60,6 +61,65 @@ class ExpressService
             }
 
             return $responseData;
+        } catch (\Exception $exception) {
+            throw new ExpressException($exception->getMessage());
+        }
+    }
+
+    /**
+     * 獲取開啟物流選擇頁連結
+     *
+     * @param array $data
+     * @return string
+     * @throws ExpressException
+     */
+    public function createLogistics(array $data): string
+    {
+        try {
+            $this->requestData['Data']['TempLogisticsID'] = '0';
+            $this->requestData['Data']['ServerReplyURL'] = config('app.url') . '/express/server-reply';
+            $this->requestData['Data']['ClientReplyURL'] = config('app.url') . '/express/client-reply';
+
+            $this->requestData['Data'] = $this->encryptData(array_merge($this->requestData['Data'], $data));
+
+            return URL::temporarySignedRoute('redirect-to-logistics-selection', now()->addSeconds(5), $this->requestData);
+        } catch (\Exception $exception) {
+            throw new ExpressException($exception->getMessage());
+        }
+    }
+
+    /**
+     * 開啟物流選擇頁
+     *
+     * @param array $data
+     * @return string
+     * @throws ExpressException
+     */
+    public function redirectToLogisticsSelection(array $data): string
+    {
+        try {
+            $url = config('express.express_url') . 'RedirectToLogisticsSelection';
+            return Http::post($url, $data)->body();
+        } catch (\Exception $exception) {
+            throw new ExpressException($exception->getMessage());
+        }
+    }
+
+    /**
+     * 建立暫存物流訂單結果通知
+     *
+     * @param array $responseData
+     * @return array
+     * @throws ExpressException
+     */
+    public function clientReply(array $responseData): array
+    {
+        try {
+            if (Arr::get($responseData, 'TransCode') !== 1) {
+                throw new ExpressException(Arr::get($responseData, 'RtnMsg'));
+            }
+
+            return $this->decryptData(Arr::get($responseData, 'Data'));
         } catch (\Exception $exception) {
             throw new ExpressException($exception->getMessage());
         }
