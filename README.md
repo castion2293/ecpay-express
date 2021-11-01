@@ -48,6 +48,7 @@ class RouteServiceProvider extends ServiceProvider
 - [獲取開啟物流選擇頁連結](#create-logistics)
 - [更新暫存物流訂單](#update-temp-trade)
 - [建立正式物流訂單](#create-by-temp-trade)
+- [建立列印託運單連結](#create-trade-document)
 
 ### <a name="create-test-data">一段標測試資料產生(B2C)</a>
 ```bash
@@ -91,6 +92,7 @@ $express = Express::createLogistics($data);
 $express = Express::updateTempTrade($data);
 ```
 
+#### $data 內容說明(array格式)
 參數 | 必填 | 名稱 | 類型 | 說明 |
 | ------------|---|:----------------------- | :------| :------|
 | TempLogisticsID |✔| 暫存物流訂單編號 | string(20) | |
@@ -118,3 +120,14 @@ $express = Express::createByTempTrade($tempLogisticsId);
 參數 |  名稱 | 類型 | 說明 |
 | ------------|---|:----------------------- | :------|
 | LogisticsID | 綠界訂單編號 | String (20) | 請保存廠商交易編號與 LogisticsID 的關連 |
+
+### <a name="create-trade-document">建立列印託運單連結</a>
+```bash
+$express = Express::createTradeDocument($data);
+```
+
+#### $data 內容說明(array格式)
+參數 | 必填 | 名稱 | 類型 | 說明 |
+| ------------|---|:----------------------- | :------| :------|
+| LogisticsID |✔| 綠界訂單編號 | Array | 1. 可支援單筆或批次列印 <br> 2. 流子類型[LogisticsSubType]與綠界訂單編號[LogisticsID]須為同 一物流方式 <br> 請帶入建立正式物流訂單時綠界回復之綠界訂單編號 [LogisticsID]|
+| LogisticsSubType |✔| 物流子類型 | string(20) | |

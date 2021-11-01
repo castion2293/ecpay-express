@@ -30,6 +30,23 @@ class ExpressController extends BaseController
         return $this->expressService->redirectToLogisticsSelection($request->all());
     }
 
+    /**
+     * @param Request $request
+     * @return string
+     * @throws \Pharaoh\Express\Exceptions\ExpressException
+     */
+    public function printTradeDocument(Request $request):string
+    {
+        return $this->expressService->printTradeDocument($request->all());
+    }
+
+    /**
+     * 建立暫存物流訂單結果通知
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @throws \Pharaoh\Express\Exceptions\ExpressException
+     */
     public function clientReply(Request $request)
     {
         $resultData = $this->expressService->clientReply(json_decode($request->input('ResultData'), true));

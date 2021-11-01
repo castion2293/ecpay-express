@@ -32,6 +32,11 @@ class Express
                     ->name('redirect-to-logistics-selection')
                     ->middleware(ValidateSignature::class);
 
+                // 列印託運單
+                Route::get('print-trade-document', [ExpressController::class, 'printTradeDocument'])
+                    ->name('print-trade-document')
+                    ->middleware(ValidateSignature::class);
+
                 Route::post('client-reply', [ExpressController::class, 'clientReply']);
 
                 Route::post('server-reply', function () {
@@ -95,6 +100,22 @@ class Express
     public function createByTempTrade(string $tempLogisticsId): array
     {
         return $this->expressService->createByTempTrade($tempLogisticsId);
+    }
+
+    /**
+     * 建立列印託運單連結
+     *
+     * @param array $data
+     * @return string
+     * @throws ExpressException
+     */
+    public function createTradeDocument(array $data): string
+    {
+        $dataRequiredFields = ['LogisticsID', 'LogisticsSubType'];
+
+        $this->checkRequiredFields($dataRequiredFields, $data);
+
+        return $this->expressService->createTradeDocument($data);
     }
 
     /**

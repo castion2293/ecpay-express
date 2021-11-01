@@ -180,6 +180,41 @@ class ExpressService
     }
 
     /**
+     * 建立列印託運單連結
+     *
+     * @param array $data
+     * @return string
+     * @throws ExpressException
+     */
+    public function createTradeDocument(array $data): string
+    {
+        try {
+            $this->requestData['Data'] = $this->encryptData(array_merge($this->requestData['Data'], $data));
+
+            return URL::temporarySignedRoute('print-trade-document', now()->addSeconds(5), $this->requestData);
+        } catch (\Exception $exception) {
+            throw new ExpressException($exception->getMessage());
+        }
+    }
+
+    /**
+     * 列印託運單
+     *
+     * @param array $data
+     * @return string
+     * @throws ExpressException
+     */
+    public function printTradeDocument(array $data): string
+    {
+        try {
+            $url = config('express.express_url') . 'PrintTradeDocument';
+            return Http::post($url, $data)->body();
+        } catch (\Exception $exception) {
+            throw new ExpressException($exception->getMessage());
+        }
+    }
+
+    /**
      * HTTP請求
      *
      * @param string $method
