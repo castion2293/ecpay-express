@@ -199,6 +199,34 @@ class ExpressService
     }
 
     /**
+     * (B2C) 7-ELEVEN 逆物流訂單
+     *
+     * @param array $data
+     * @return array
+     * @throws ExpressException
+     */
+    public function returnUniMartCVS(array $data): array
+    {
+        try {
+            $this->requestData['Data']['ServerReplyURL'] = config('app.url') . '/express/server-reply';
+            $this->requestData['Data']['ServiceType'] = '4';
+
+            $this->requestData['Data'] = $this->encryptData(array_merge($this->requestData['Data'], $data));
+
+            $responseData = $this->httpRequest('ReturnUniMartCVS');
+
+            // RtnCode !== 1 一律回傳錯誤
+            if (Arr::get($responseData, 'RtnCode') !== 1) {
+                throw new ExpressException(Arr::get($responseData, 'RtnMsg'));
+            }
+
+            return $responseData;
+        } catch (\Exception $exception) {
+            throw new ExpressException($exception->getMessage());
+        }
+    }
+
+    /**
      * 建立暫存物流訂單結果通知
      *
      * @param array $responseData

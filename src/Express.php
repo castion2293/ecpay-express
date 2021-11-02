@@ -119,6 +119,22 @@ class Express
     }
 
     /**
+     * (B2C) 7-ELEVEN 逆物流訂單
+     *
+     * @param array $data
+     * @return array
+     * @throws ExpressException
+     */
+    public function returnUniMartCVS(array $data): array
+    {
+        $dataRequiredFields = ['GoodsAmount', 'SenderName'];
+
+        $this->checkRequiredFields($dataRequiredFields, $data);
+
+        return $this->expressService->returnUniMartCVS($data);
+    }
+
+    /**
      * 檢查必填欄位
      *
      * @param array $requiredFields

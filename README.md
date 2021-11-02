@@ -49,6 +49,7 @@ class RouteServiceProvider extends ServiceProvider
 - [更新暫存物流訂單](#update-temp-trade)
 - [建立正式物流訂單](#create-by-temp-trade)
 - [建立列印託運單連結](#create-trade-document)
+- [(B2C) 7-ELEVEN 逆物流訂單](#return-unimart-cvs)
 
 ### <a name="create-test-data">一段標測試資料產生(B2C)</a>
 ```bash
@@ -131,3 +132,19 @@ $express = Express::createTradeDocument($data);
 | ------------|---|:----------------------- | :------| :------|
 | LogisticsID |✔| 綠界訂單編號 | Array | 1. 可支援單筆或批次列印 <br> 2. 流子類型[LogisticsSubType]與綠界訂單編號[LogisticsID]須為同 一物流方式 <br> 請帶入建立正式物流訂單時綠界回復之綠界訂單編號 [LogisticsID]|
 | LogisticsSubType |✔| 物流子類型 | string(20) | |
+
+### <a name="return-unimart-cvs">(B2C) 7-ELEVEN 逆物流訂單</a>
+```bash
+$express = Express::returnUniMartCVS($data);
+```
+
+#### $data 內容說明(array格式)
+參數 | 必填 | 名稱 | 類型 | 說明 |
+| ------------|---|:----------------------- | :------| :------|
+| GoodsAmount |✔| 商品金額 | int | 金額範圍為 1~20,000 元 此為商品遺失賠償依據，僅可使用數字 |
+| SenderName |✔| 退貨人姓名 | string(50 | 注意事項: 不可有符號不可有符號^ ' ` !@# % & * + \ " < >|_ [ ] , ，且 不可有空白，若帶有空白系統自動去除 |
+| LogiscisID | | 綠界訂單編號 | String (20) | |
+| GoodsName | | 商品名稱 | String (50) | 注意事項: <br> 不得輸入^ ' ` ! @ # % & * + \ " < >| _ [ ]等特殊符號 |
+| SenderPhone | | 退貨人手機 | String (20) | |
+| Remark | | 備註 | String (40) | |
+
