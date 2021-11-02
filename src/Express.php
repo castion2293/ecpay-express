@@ -135,6 +135,22 @@ class Express
     }
 
     /**
+     * (B2C) 全家逆物流訂單
+     *
+     * @param array $data
+     * @return array
+     * @throws ExpressException
+     */
+    public function returnFamiCVS(array $data): array
+    {
+        $dataRequiredFields = ['GoodsAmount', 'SenderName'];
+
+        $this->checkRequiredFields($dataRequiredFields, $data);
+
+        return $this->expressService->returnFamiCVS($data);
+    }
+
+    /**
      * 檢查必填欄位
      *
      * @param array $requiredFields

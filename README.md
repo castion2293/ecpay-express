@@ -50,6 +50,7 @@ class RouteServiceProvider extends ServiceProvider
 - [建立正式物流訂單](#create-by-temp-trade)
 - [建立列印託運單連結](#create-trade-document)
 - [(B2C) 7-ELEVEN 逆物流訂單](#return-unimart-cvs)
+- [(B2C) 全家逆物流訂單](return-fami-cvs)
 
 ### <a name="create-test-data">一段標測試資料產生(B2C)</a>
 ```bash
@@ -147,4 +148,12 @@ $express = Express::returnUniMartCVS($data);
 | GoodsName | | 商品名稱 | String (50) | 注意事項: <br> 不得輸入^ ' ` ! @ # % & * + \ " < >| _ [ ]等特殊符號 |
 | SenderPhone | | 退貨人手機 | String (20) | |
 | Remark | | 備註 | String (40) | |
+
+### <a name="return-fami-cvs">(B2C) 全家逆物流訂單</a>
+
+```bash
+$express = Express::returnFamiCVS($data);
+```
+
+#### $data 內容說明(array格式)與 7-ELEVEN 逆物流訂單 相同
 
