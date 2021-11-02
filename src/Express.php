@@ -167,6 +167,18 @@ class Express
     }
 
     /**
+     * 特店進行物流訂單查詢作業
+     *
+     * @param array $data
+     * @return array
+     * @throws ExpressException
+     */
+    public function queryLogisticsTradeInfo(array $data): array
+    {
+        return $this->expressService->queryLogisticsTradeInfo($data);
+    }
+
+    /**
      * 檢查必填欄位
      *
      * @param array $requiredFields

@@ -52,6 +52,7 @@ class RouteServiceProvider extends ServiceProvider
 - [(B2C) 7-ELEVEN 逆物流訂單](#return-unimart-cvs)
 - [(B2C) 全家逆物流訂單](return-fami-cvs)
 - [宅配逆物流訂單](return-home)
+- [特店進行物流訂單查詢作業](query-logistics-trade-info)
 
 ### <a name="create-test-data">一段標測試資料產生(B2C)</a>
 ```bash
@@ -187,3 +188,16 @@ $express = Express::returnHome($data);
 | ScheduledDeliveryDate | | 指定送達日 | string(10) | 當物流子類型選擇 ECAN(宅配通)時，此參數才有作用 <br> 注意事項: <br> 日期指定限制 D+3 (D:該訂單建立時間)|
 | Remark | | 備註 | string(60) | |
 | PlatformID | | 特約合作平台商代號 | string(10) | 由綠界科技提供，此參數為專案合作的平 台商使用，一般廠商介接 請放空值。若為專案合作的平台商使用時，MerchantID 請帶賣家所綁定的 MerchantID|
+
+
+### <a name="query-logistics-trade-info">特店進行物流訂單查詢作業</a>
+```bash
+$express = Express::queryLogisticsTradeInfo($data);
+```
+
+#### $data 內容說明(array格式)
+參數 | 必填 | 名稱 | 類型 | 說明 |
+| ------------|---|:----------------------- | :------| :------|
+| LogiscisID | | 綠界訂單編號 | string(20) | 與 MerchantTradeNo(廠商交易編號)需二擇一填寫 |
+| MerchantTradeNo | | 廠商交易編號 | string(20) | 1. 廠商交易編號均為唯一值，不可重複使用 <br> 2. 英數字大小寫混合 <br> 3. 與 LogisticsID(綠界訂單編號)需二擇一填寫 |
+
