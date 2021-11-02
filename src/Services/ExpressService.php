@@ -82,7 +82,11 @@ class ExpressService
 
             $this->requestData['Data'] = $this->encryptData(array_merge($this->requestData['Data'], $data));
 
-            return URL::temporarySignedRoute('redirect-to-logistics-selection', now()->addSeconds(5), $this->requestData);
+            return URL::temporarySignedRoute(
+                'redirect-to-logistics-selection',
+                now()->addSeconds(5),
+                $this->requestData
+            );
         } catch (\Exception $exception) {
             throw new ExpressException($exception->getMessage());
         }
@@ -100,26 +104,6 @@ class ExpressService
         try {
             $url = config('express.express_url') . 'RedirectToLogisticsSelection';
             return Http::post($url, $data)->body();
-        } catch (\Exception $exception) {
-            throw new ExpressException($exception->getMessage());
-        }
-    }
-
-    /**
-     * 建立暫存物流訂單結果通知
-     *
-     * @param array $responseData
-     * @return array
-     * @throws ExpressException
-     */
-    public function clientReply(array $responseData): array
-    {
-        try {
-            if (Arr::get($responseData, 'TransCode') !== 1) {
-                throw new ExpressException(Arr::get($responseData, 'RtnMsg'));
-            }
-
-            return $this->decryptData(Arr::get($responseData, 'Data'));
         } catch (\Exception $exception) {
             throw new ExpressException($exception->getMessage());
         }
@@ -215,6 +199,54 @@ class ExpressService
     }
 
     /**
+     * 建立暫存物流訂單結果通知
+     *
+     * @param array $responseData
+     * @return array
+     * @throws ExpressException
+     */
+    public function getReplyData(array $responseData): array
+    {
+        try {
+            if (Arr::get($responseData, 'TransCode') !== 1) {
+                throw new ExpressException(Arr::get($responseData, 'RtnMsg'));
+            }
+
+            return $this->decryptData(Arr::get($responseData, 'Data'));
+        } catch (\Exception $exception) {
+            throw new ExpressException($exception->getMessage());
+        }
+    }
+
+    /**
+     * 成功接收的回傳內容
+     *
+     * @return array
+     * @throws ExpressException
+     */
+    public function successResponse(): array
+    {
+        try {
+            return [
+                'MerchantID' => Arr::get($this->settings, 'merchant_id'),
+                'RqHeader' => [
+                    'Timestamp' => now()->timestamp,
+                ],
+                'TransCode' => 1,
+                'TransMsg' => "",
+                "Data" => $this->encryptData(
+                    [
+                        'RtnCode' => 1,
+                        'RtnMsg' => '成功'
+                    ]
+                )
+            ];
+        } catch (\Exception $exception) {
+            throw new ExpressException($exception->getMessage());
+        }
+    }
+
+    /**
      * HTTP請求
      *
      * @param string $method
@@ -247,7 +279,13 @@ class ExpressService
     private function decryptData(string $encryptString): array
     {
         // AES 解密
-        $urlEncodeString = openssl_decrypt($encryptString, 'aes-128-cbc', $this->settings['hash_key'], 0, $this->settings['hash_iv']);
+        $urlEncodeString = openssl_decrypt(
+            $encryptString,
+            'aes-128-cbc',
+            $this->settings['hash_key'],
+            0,
+            $this->settings['hash_iv']
+        );
 
         // URLDecode 解碼
         return json_decode(urldecode($urlEncodeString), true);

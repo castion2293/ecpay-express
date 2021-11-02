@@ -4,6 +4,8 @@ namespace Pharaoh\Express\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
+use Pharaoh\Express\Events\ServerReplyEvent;
+use Pharaoh\Express\Exceptions\ExpressException;
 use Pharaoh\Express\Services\ExpressService;
 
 class ExpressController extends BaseController
@@ -41,7 +43,7 @@ class ExpressController extends BaseController
     }
 
     /**
-     * 建立暫存物流訂單結果通知
+     * 暫存物流訂單通知結果
      *
      * @param Request $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
@@ -49,8 +51,8 @@ class ExpressController extends BaseController
      */
     public function clientReply(Request $request)
     {
-        $resultData = $this->expressService->clientReply(json_decode($request->input('ResultData'), true));
-        $resultData = collect($resultData)->reject(
+        $replyData = $this->expressService->getReplyData(json_decode($request->input('ResultData'), true));
+        $replyData = collect($replyData)->reject(
             function ($value, $key) {
                 if ($key === 'RtnCode') {
                     return true;
@@ -64,6 +66,25 @@ class ExpressController extends BaseController
             }
         )->toArray();
 
-        return view('pharaoh_express::client-reply', $resultData);
+        return view('pharaoh_express::client-reply', $replyData);
+    }
+
+    /**
+     * 物流狀態(貨態)通知結果
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     * @throws ExpressException
+     */
+    public function serverReply(Request $request)
+    {
+        $replyData = $this->expressService->getReplyData($request->all());
+
+        // 發送 Server Reply 事件
+        ServerReplyEvent::dispatch($replyData);
+
+        $successResponseData = $this->expressService->successResponse();
+
+        return response($successResponseData);
     }
 }

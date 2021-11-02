@@ -37,11 +37,11 @@ class Express
                     ->name('print-trade-document')
                     ->middleware(ValidateSignature::class);
 
+                // 暫存物流訂單通知結果
                 Route::post('client-reply', [ExpressController::class, 'clientReply']);
 
-                Route::post('server-reply', function () {
-                    \Log::info(request()->all());
-                });
+                // 物流狀態(貨態)通知結果
+                Route::post('server-reply', [ExpressController::class, 'serverReply']);
             }
         );
     }
