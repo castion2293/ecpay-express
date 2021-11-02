@@ -151,6 +151,22 @@ class Express
     }
 
     /**
+     * 宅配逆物流訂單
+     *
+     * @param array $data
+     * @return array
+     * @throws ExpressException
+     */
+    public function returnHome(array $data): array
+    {
+        $dataRequiredFields = ['LogisticsSubType', 'GoodsAmount'];
+
+        $this->checkRequiredFields($dataRequiredFields, $data);
+
+        return $this->expressService->returnHome($data);
+    }
+
+    /**
      * 檢查必填欄位
      *
      * @param array $requiredFields

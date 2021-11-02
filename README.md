@@ -51,6 +51,7 @@ class RouteServiceProvider extends ServiceProvider
 - [建立列印託運單連結](#create-trade-document)
 - [(B2C) 7-ELEVEN 逆物流訂單](#return-unimart-cvs)
 - [(B2C) 全家逆物流訂單](return-fami-cvs)
+- [宅配逆物流訂單](return-home)
 
 ### <a name="create-test-data">一段標測試資料產生(B2C)</a>
 ```bash
@@ -150,10 +151,39 @@ $express = Express::returnUniMartCVS($data);
 | Remark | | 備註 | String (40) | |
 
 ### <a name="return-fami-cvs">(B2C) 全家逆物流訂單</a>
-
 ```bash
 $express = Express::returnFamiCVS($data);
 ```
 
 #### $data 內容說明(array格式)與 7-ELEVEN 逆物流訂單 相同
 
+### <a name="return-home">宅配逆物流訂單</a>
+```bash
+$express = Express::returnHome($data);
+```
+
+#### $data 內容說明(array格式)
+參數 | 必填 | 名稱 | 類型 | 說明 |
+| ------------|---|:----------------------- | :------| :------|
+| GoodsAmount |✔| 商品金額 | int | 金額範圍為 1~20,000 元 此為商品遺失賠償依據，僅可使用數字 |
+| LogiscisID | | 綠界訂單編號 | string(20) | |
+| LogisticsSubType | | 物流子類型 | string(20) | TCAT:黑貓 <br> ECAN:宅配通 <br> 注意事項: <br> 1. 若綠界訂單編號[LogisticsID]有值，且原物流類型[LogisticsType]為HOME(宅配)，本欄位可為空值 <br> 若綠界訂單編號[LogisticsID]有值，且原物流類型[LogisticsType]為CVS(超商取貨)，本欄位不可為空 <br> 3. 若綠界訂單編號[LogisticsID]為空值時，本欄位不可為空值|
+| SenderName | | 退貨人姓名 | string(10) | 1. 若綠界訂單編號[LogisticsID]有值且與該訂單為相同的「物流子類型」時，退貨收件人與寄件人資訊會與原訂單相反且自動帶入宅配規格、溫層、距離、品名 <br> 2. 若資訊與關連物流交易不同時，可自行輸入 <br> 注意事項: <br> 1. 若綠界訂單編號[LogisticsID]有值，且原物流類型[LogisticsType]為HOME(宅配)，本欄位可為空值 <br> 2. 若綠界訂單編號[LogisticsID]有值，且原物流類型[LogisticsType]為CVS(超商取貨)，本欄位不可為空值 <br> 3. 若綠界訂單編號[LogisticsID]為空值時，本欄位不可為空值 <br> 4. 長度限制最多 10 個字元(中文 5 個字，英文 10 個字)|
+| SenderPhone | | 退貨人電話 | string(20) | 注意事項: <br> 1. 若綠界訂單編號[LogisticsID]不為空值時，且原物流類型 [LogisticsType]為HOME(宅配)，本欄位可為空值 <br> 2. 若物流交易編號[LogisticsID]不為 空值時，且原物流類型 [LogisticsType] 為CVS(超商取貨)，本欄位不可為空值 <br> 3. 若物流交易編號[LogisticsID]為空值時，本欄位與退貨人手機 [SenderCellPhone]擇一不可為空) <br> 4. 允許數字+特殊符號;特殊符號僅限 ()-#|
+| SenderCellPhone | | 退貨人手機 | string(20) | 注意事項: <br> 1. 若綠界訂單編號[LogisticsID]不為空值時，且原物流類型[LogisticsType] 為 HOME(宅配)，本欄位可為空值 <br> 2. 若綠界訂單編號[LogisticsID]有值時，且原物流類型[LogisticsType] 為CVS(超商取貨)，本欄位不可為空值 <br> 3. 若綠界訂單編號[LogisticsID]有值時，本欄位與退貨人電話 [SenderPhone]擇一不可為空 <br> 4. 只允許數字、10 碼、09 開頭|
+| SenderZipCode | | 退貨人郵遞 區號 | string(5) | 注意事項: <br> 1. 若綠界訂單編號[LogisticsID]有值時，且原物流類型[LogisticsType] 為HOME(宅配)，本欄位可為空值 <br> 2. 若綠界訂單編號[LogisticsID]有值時，且原物流類型[LogisticsType] 為CVS(超商取貨)，本欄位不可為空值 <br> 3. 若綠界訂單編號[LogisticsID]為空值時，本欄位不可為空值|
+| SenderAddress | | 退貨人地址 | string(60) | 注意事項: <br> 1. 若綠界訂單編號[LogisticsID]有值時，且原物流類型[LogisticsType] 為HOME(宅配)，本欄位可為空值 <br> 2. 若綠界訂單編號 [LogisticsID]有值時，且原物流類型[LogisticsType] 為 CVS(超商取貨)，本欄位字元限制需大於 6 個字元，且不可超過 60 個字元 <br> 3. 若綠界訂單編號[LogisticsID]為空值時，本欄位字元限制需大於 6 個字元，且不可超過 60 個字元|
+| ReceiverName | | 收件人姓名 | string(10) | 注意事項: <br> 1. 若綠界訂單編號[LogisticsID]有值時，且原物流類型[LogisticsType] 為HOME(宅配)，本欄位可為空值 <br> 2. 若綠界訂單編號[LogisticsID]有值時，且原物流類型[LogisticsType] 為CVS(超商取貨)，本欄位不可為空值 <br> 3. 若綠界訂單編號[LogisticsID]為空值時，本欄位不可為空值 <br> 4. 字元限制為 10 個字元(最多 5 個中文字、10 個英文字)、不可有空白，若帶有空白系統自動去除|
+| ReceiverPhone | | 收件人電話 | string(20) | 注意事項: <br> 1. 若綠界訂單編號[LogisticsID]不為空值時，且原物流類型 [LogisticsType] 為 HOME(宅配)，本欄位可為空值 <br> 2. 若綠界訂單編號[LogisticsID]不為空值時，且原物流類型 [LogisticsType] 為CVS(超商取貨)，本欄位不可為空值 <br> 3. 若綠界訂單編號[LogisticsID]為空值時，本欄位與收件人手機 [ReceiverCellPhone]擇一不可為空) <br> 4. 允許數字+特殊符號;特殊符號僅限()-#|
+| ReceiverCellPhone | | 收件人手機 | string(20) | 注意事項: <br> 1. 若綠界訂單編號[LogisticsID]有值時，且原物流類型[LogisticsType] 為宅配HOME(宅配)，本欄位可為空值 <br> 2. 若綠界訂單編號[LogisticsID]有值時，且原物流類型[LogisticsType] 為CVS(超商取貨)，本欄位不可為空值 <br> 3. 若綠界訂單編號[LogisticsID]為空值時，本欄位與收件人電話 [ReceiverPhone]擇一不可為空 <br> 4. 只允許數字、10 碼、09 開頭|
+| ReceiverZipCode | | 收件人郵遞區號 | string(5) | 注意事項: <br> 1. 若綠界訂單編號[LogisticsID]有值時，且原物流類型[LogisticsType] 為 HOME(宅配)，本欄位可為空值 <br> 2. 若綠界訂單編號[LogisticsID]有值時，且原物流類型[LogisticsType] 為 CVS(超商取貨)，本欄位不可為空值 <br> 3. 若綠界訂單編號[LogisticsID]為空 值時，本欄位不可為空值|
+| ReceiverAddress | | 收件人地址 | string(60) | 注意事項: <br> 1. 若綠界訂單編號[LogisticsID]有值時，且原物流類型[LogisticsType] 為 HOME(宅配)，本欄位可為空值 <br> 2. 若綠界訂單編號[LogisticsID]有值時，且原物流類型[LogisticsType] 為 CVS(超商取貨)，本欄位字元限制需大 於 6 個字元，且不可超過 60 個字元 <br> 3. 若綠界訂單編號[LogisticsID]為空值時，本欄位字元限制需大於 6 個字 元，且不可超過 60 個字元|
+| ReceiverEmail | | 收件人 mail | string(50) | 注意事項: <br> 1. 若綠界訂單編號[LogisticsID]有值時，且原物流類型[LogisticsType] 為 HOME(宅配)，本欄位可為空值 <br> 2. 若綠界訂單編號[LogisticsID]有值時，且原物流類型[LogisticsType] 為 CVS(超商取貨)，本欄位不可為空值 <br> 3. 若綠界訂單編號[LogisticsID]為空值時，本欄位不可為空值|
+| GoodsName | | 物品名稱 | string(60) | 注意事項: <br> 不得輸入^ ' ` ! @ # % & * + \ " < >| _ [ ]等特殊符號|
+| Temperature | | 溫層 | string(4) | 0001:常溫 (預設值) <br> 0002:冷藏 <br> 0003:冷凍|
+| Distance | | 距離 | string(2) | 00:同縣市 (預設值) <br> 01:外縣市 <br> 2:離島 <br> ※注意事項 <br> 當系統檢查到收件人地址 (ReceiverAddress)與寄件人地址 (SenderAddress)所屬縣市與距離(Distance) 輸入的值不相符時，系統將自動更正距離 (Distance)為正確值|
+| Specification | | 規格 | string(4) | 0001: 60cm (預設值) <br> 0002: 90cm <br> 0003: 120cm <br> 0004: 150cm <br> 注意事項: <br> 溫層選擇 0002:冷藏和 0003:冷凍時，此規格參數不可帶入 0004:150cm|
+| ScheduledDeliveryTime | | 預定送達時段 | string(2) | 1:13 前 <br> 2: 14~18 <br> 4:不限時 <br> 當子物流選擇 ECAN(宅配通)時，可選擇以下時段 <br> 12:13 前 <br> 23: 14~18 <br> 4:不限時|
+| ScheduledDeliveryDate | | 指定送達日 | string(10) | 當物流子類型選擇 ECAN(宅配通)時，此參數才有作用 <br> 注意事項: <br> 日期指定限制 D+3 (D:該訂單建立時間)|
+| Remark | | 備註 | string(60) | |
+| PlatformID | | 特約合作平台商代號 | string(10) | 由綠界科技提供，此參數為專案合作的平 台商使用，一般廠商介接 請放空值。若為專案合作的平台商使用時，MerchantID 請帶賣家所綁定的 MerchantID|
