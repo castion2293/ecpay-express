@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.9](https://github.com/castion2293/ecpay-express/compare/v0.0.8...v0.0.9) (2021-11-02)
+
+
+### Bug Fixes
+
+* 完成物流狀態(貨態)通知結果([@nick](https://github.com/nick)) ([6094c57](https://github.com/castion2293/ecpay-express/commit/6094c5746acb00b4a843079a028cb417c2b457d5))
+
 ### [0.0.8](https://github.com/castion2293/ecpay-express/compare/v0.0.7...v0.0.8) (2021-11-01)
 
 
