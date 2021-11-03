@@ -182,6 +182,22 @@ class Express
     }
 
     /**
+     * (B2C) 7-ELEVEN-更新出貨日、門市
+     *
+     * @param array $data
+     * @return array
+     * @throws ExpressException
+     */
+    public function updateShipmentInfo(array $data): array
+    {
+        $dataRequiredFields = ['LogisticsID'];
+
+        $this->checkRequiredFields($dataRequiredFields, $data);
+
+        return $this->expressService->updateShipmentInfo($data);
+    }
+
+    /**
      * 檢查必填欄位
      *
      * @param array $requiredFields

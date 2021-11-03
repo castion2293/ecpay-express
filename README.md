@@ -53,6 +53,7 @@ class RouteServiceProvider extends ServiceProvider
 - [(B2C) 全家逆物流訂單](return-fami-cvs)
 - [宅配逆物流訂單](return-home)
 - [特店進行物流訂單查詢作業](query-logistics-trade-info)
+- [(B2C) 7-ELEVEN-更新出貨日、門市](update-shipment-info)
 
 ### <a name="create-test-data">一段標測試資料產生(B2C)</a>
 ```bash
@@ -201,3 +202,14 @@ $express = Express::queryLogisticsTradeInfo($data);
 | LogiscisID | | 綠界訂單編號 | string(20) | 與 MerchantTradeNo(廠商交易編號)需二擇一填寫 |
 | MerchantTradeNo | | 廠商交易編號 | string(20) | 1. 廠商交易編號均為唯一值，不可重複使用 <br> 2. 英數字大小寫混合 <br> 3. 與 LogisticsID(綠界訂單編號)需二擇一填寫 |
 
+### <a name="update-shipment-info">(B2C) 7-ELEVEN-更新出貨日、門市</a>
+```bash
+$express = Express::updateShipmentInfo($data);
+```
+
+#### $data 內容說明(array格式)
+參數 | 必填 | 名稱 | 類型 | 說明 |
+| ------------|---|:----------------------- | :------| :------|
+| LogiscisID |✔| 綠界訂單編號 | string(20) |  |
+| ShipmentDate | | 物流訂單出貨日 期 | string(10) | 物流訂單出貨日期(貨到物流中心的日期)、物流訂單取貨門市需擇一必填 |
+| ReceiverStoreID | | 物流訂單取貨門市 | string(6) | 物流訂單出貨日期(貨到物流中心的日期)、物流訂單取貨門市需擇一必填 <br> 注意事項: <br> 1. 當 7-ELEVEN 貨態為 2037 門市關轉時，才能變更取貨門市 <br> 2. 收到 2037 門市關轉貨態時，請於第 3 日早上 10 點前(如5/26 當天收到門市關轉貨態，須於 5/28 早上 10 點前回傳) 變更取貨門市|
