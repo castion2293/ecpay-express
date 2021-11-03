@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.16](https://github.com/castion2293/ecpay-express/compare/v0.0.15...v0.0.16) (2021-11-03)
+
+
+### Bug Fixes
+
+* 完成(C2C)7-ELEVEN、全家、OK - 更新門市([@nick](https://github.com/nick)) ([ded08b5](https://github.com/castion2293/ecpay-express/commit/ded08b525fe2dc39794a6b2c4c6c6e8417573662))
+
 ### [0.0.15](https://github.com/castion2293/ecpay-express/compare/v0.0.14...v0.0.15) (2021-11-03)
 
 
