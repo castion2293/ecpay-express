@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0](https://github.com/castion2293/ecpay-express/compare/v0.0.18...v1.0.0) (2021-11-03)
+
+
+### Features
+
+* 發佈第一版([@nick](https://github.com/nick)) ([7cbcfa8](https://github.com/castion2293/ecpay-express/commit/7cbcfa87d38a5966b1e253e3ba15ade3e8981aa0))
+
 ### [0.0.18](https://github.com/castion2293/ecpay-express/compare/v0.0.17...v0.0.18) (2021-11-03)
 
 
