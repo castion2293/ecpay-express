@@ -77,7 +77,7 @@ class ExpressService
     {
         try {
             $this->requestData['Data']['TempLogisticsID'] = '0';
-            $this->requestData['Data']['ServerReplyURL'] = config('app.url') . '/express/server-reply';
+            $this->requestData['Data']['ServerReplyURL'] = config('app.url') . '/express/temp-trade-reply';
             $this->requestData['Data']['ClientReplyURL'] = config('app.url') . '/express/client-reply';
 
             $this->requestData['Data'] = $this->encryptData(array_merge($this->requestData['Data'], $data));
@@ -119,7 +119,7 @@ class ExpressService
     public function updateTempTrade(array $data): array
     {
         try {
-            $this->requestData['Data']['ServerReplyURL'] = config('app.url') . '/express/server-reply';
+            $this->requestData['Data']['ServerReplyURL'] = config('app.url') . '/express/temp-trade-reply';
 
             $this->requestData['Data'] = $this->encryptData(array_merge($this->requestData['Data'], $data));
 
@@ -208,7 +208,7 @@ class ExpressService
     public function returnUniMartCVS(array $data): array
     {
         try {
-            $this->requestData['Data']['ServerReplyURL'] = config('app.url') . '/express/server-reply';
+            $this->requestData['Data']['ServerReplyURL'] = config('app.url') . '/express/return-trade-reply';
             $this->requestData['Data']['ServiceType'] = '4';
 
             $this->requestData['Data'] = $this->encryptData(array_merge($this->requestData['Data'], $data));
@@ -236,7 +236,7 @@ class ExpressService
     public function returnFamiCVS(array $data): array
     {
         try {
-            $this->requestData['Data']['ServerReplyURL'] = config('app.url') . '/express/server-reply';
+            $this->requestData['Data']['ServerReplyURL'] = config('app.url') . '/express/return-trade-reply';
             $this->requestData['Data']['ServiceType'] = '4';
 
             $this->requestData['Data'] = $this->encryptData(array_merge($this->requestData['Data'], $data));
@@ -264,7 +264,7 @@ class ExpressService
     public function returnHome(array $data): array
     {
         try {
-            $this->requestData['Data']['ServerReplyURL'] = config('app.url') . '/express/server-reply';
+            $this->requestData['Data']['ServerReplyURL'] = config('app.url') . '/express/return-trade-reply';
 
             $this->requestData['Data'] = $this->encryptData(array_merge($this->requestData['Data'], $data));
 

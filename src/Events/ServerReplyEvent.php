@@ -19,11 +19,13 @@ class ServerReplyEvent
     /**
      * Create a new event instance.
      *
-     * @return void
+     * @param array $params
+     * @param string $type
      */
-    public function __construct(array $params)
+    public function __construct(array $params, string $type)
     {
         $this->params = $params;
+        $this->params['type'] = $type;
     }
 
     /**

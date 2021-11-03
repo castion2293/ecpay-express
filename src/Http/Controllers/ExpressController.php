@@ -76,12 +76,31 @@ class ExpressController extends BaseController
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      * @throws ExpressException
      */
-    public function serverReply(Request $request)
+    public function tempTradeReply(Request $request)
     {
         $replyData = $this->expressService->getReplyData($request->all());
 
         // 發送 Server Reply 事件
-        ServerReplyEvent::dispatch($replyData);
+        ServerReplyEvent::dispatch($replyData, 'temp_trade_reply');
+
+        $successResponseData = $this->expressService->successResponse();
+
+        return response($successResponseData);
+    }
+
+    /**
+     * 物流狀態(逆物流)通知
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
+     * @throws ExpressException
+     */
+    public function returnTradeReply(Request $request)
+    {
+        $replyData = $this->expressService->getReplyData($request->all());
+
+        // 發送 Server Reply 事件
+        ServerReplyEvent::dispatch($replyData, 'return_trade_reply');
 
         $successResponseData = $this->expressService->successResponse();
 

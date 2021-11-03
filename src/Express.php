@@ -41,7 +41,10 @@ class Express
                 Route::post('client-reply', [ExpressController::class, 'clientReply']);
 
                 // 物流狀態(貨態)通知結果
-                Route::post('server-reply', [ExpressController::class, 'serverReply']);
+                Route::post('temp-trade-reply', [ExpressController::class, 'tempTradeReply']);
+
+                // 物流狀態(逆物流)通知
+                Route::post('return-trade-reply', [ExpressController::class, 'returnTradeReply']);
             }
         );
     }
