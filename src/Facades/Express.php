@@ -4,6 +4,10 @@ namespace Pharaoh\Express\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
+/**
+ * Class Express
+ * @package Pharaoh\Express\Facades
+ */
 class Express extends Facade
 {
     /**

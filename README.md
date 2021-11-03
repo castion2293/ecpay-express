@@ -242,3 +242,16 @@ $express = Express::cancelC2COrder($data);
 | LogiscisID |✔| 綠界訂單編號 | string(20) |  |
 | CVSPaymentNo |✔| 寄貨編號 | string(15) |  |
 | CVSValidationNo |✔| 驗證碼 | string(10) |  |
+
+### 物流狀態通知事件
+```bash
+use Pharaoh\Express\Events\ServerReplyEvent;
+
+class EventServiceProvider extends ServiceProvider
+{
+    ServerReplyEvent::class => [
+        ServerReplyListener::class
+    ]
+}
+```
+物流狀態通知處理任務請在專案中的 ServerReplyListener 實作 type 有兩種 temp_trade_reply(貨態通知) 及 return_trade_reply(逆物流通知)
