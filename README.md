@@ -54,6 +54,7 @@ class RouteServiceProvider extends ServiceProvider
 - [宅配逆物流訂單](return-home)
 - [特店進行物流訂單查詢作業](query-logistics-trade-info)
 - [(B2C) 7-ELEVEN-更新出貨日、門市](update-shipment-info)
+- [(C2C)7-ELEVEN、全家、OK - 更新門市](update-store-info)
 
 ### <a name="create-test-data">一段標測試資料產生(B2C)</a>
 ```bash
@@ -213,3 +214,18 @@ $express = Express::updateShipmentInfo($data);
 | LogiscisID |✔| 綠界訂單編號 | string(20) |  |
 | ShipmentDate | | 物流訂單出貨日 期 | string(10) | 物流訂單出貨日期(貨到物流中心的日期)、物流訂單取貨門市需擇一必填 |
 | ReceiverStoreID | | 物流訂單取貨門市 | string(6) | 物流訂單出貨日期(貨到物流中心的日期)、物流訂單取貨門市需擇一必填 <br> 注意事項: <br> 1. 當 7-ELEVEN 貨態為 2037 門市關轉時，才能變更取貨門市 <br> 2. 收到 2037 門市關轉貨態時，請於第 3 日早上 10 點前(如5/26 當天收到門市關轉貨態，須於 5/28 早上 10 點前回傳) 變更取貨門市|
+
+### <a name="update-store-info">(C2C)7-ELEVEN、全家、OK - 更新門市</a>
+```bash
+$express = Express::updateStoreInfo($data);
+```
+
+#### $data 內容說明(array格式)
+參數 | 必填 | 名稱 | 類型 | 說明 |
+| ------------|---|:----------------------- | :------| :------|
+| LogiscisID |✔| 綠界訂單編號 | string(20) |  |
+| CVSPaymentNo |✔| 寄貨編號 | string(15) |  |
+| CVSValidationNo |✔| 驗證碼 | string(10) | 若為 OK 超商非必填 |
+| StoreType |✔| 門市類型 | string(2) | 01:取件門市更新 <br> 02:退件門市更新 |
+| ReceiverStoreID | | 物流訂單取貨門市 | string(6) | 注意事項: <br> 物流訂單取貨門市、物流訂單退貨門市 需擇一必填 |
+| ReturnStoreID | | 物流訂單退貨門市 | string(6) | 注意事項: <br> 物流訂單取貨門市、物流訂單退貨門市 需擇一必填 |

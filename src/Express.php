@@ -198,6 +198,22 @@ class Express
     }
 
     /**
+     * (C2C)7-ELEVEN、全家、OK - 更新門市
+     *
+     * @param array $data
+     * @return array
+     * @throws ExpressException
+     */
+    public function updateStoreInfo(array $data): array
+    {
+        $dataRequiredFields = ['LogisticsID', 'CVSPaymentNo'];
+
+        $this->checkRequiredFields($dataRequiredFields, $data);
+
+        return $this->expressService->updateStoreInfo($data);
+    }
+
+    /**
      * 檢查必填欄位
      *
      * @param array $requiredFields
