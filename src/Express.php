@@ -214,6 +214,22 @@ class Express
     }
 
     /**
+     * 取消訂單(7-EVEVEN 超商 C2C)
+     *
+     * @param array $data
+     * @return array
+     * @throws ExpressException
+     */
+    public function cancelC2COrder(array $data): array
+    {
+        $dataRequiredFields = ['LogisticsID', 'CVSPaymentNo', 'CVSValidationNo'];
+
+        $this->checkRequiredFields($dataRequiredFields, $data);
+
+        return $this->expressService->cancelC2COrder($data);
+    }
+
+    /**
      * 檢查必填欄位
      *
      * @param array $requiredFields

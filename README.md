@@ -55,6 +55,7 @@ class RouteServiceProvider extends ServiceProvider
 - [特店進行物流訂單查詢作業](query-logistics-trade-info)
 - [(B2C) 7-ELEVEN-更新出貨日、門市](update-shipment-info)
 - [(C2C)7-ELEVEN、全家、OK - 更新門市](update-store-info)
+- [取消訂單(7-EVEVEN 超商 C2C)](cancel-c2c-order)
 
 ### <a name="create-test-data">一段標測試資料產生(B2C)</a>
 ```bash
@@ -229,3 +230,15 @@ $express = Express::updateStoreInfo($data);
 | StoreType |✔| 門市類型 | string(2) | 01:取件門市更新 <br> 02:退件門市更新 |
 | ReceiverStoreID | | 物流訂單取貨門市 | string(6) | 注意事項: <br> 物流訂單取貨門市、物流訂單退貨門市 需擇一必填 |
 | ReturnStoreID | | 物流訂單退貨門市 | string(6) | 注意事項: <br> 物流訂單取貨門市、物流訂單退貨門市 需擇一必填 |
+
+### <a name="cancel-c2c-order">取消訂單(7-EVEVEN 超商 C2C)</a>
+```bash
+$express = Express::cancelC2COrder($data);
+```
+
+#### $data 內容說明(array格式)
+參數 | 必填 | 名稱 | 類型 | 說明 |
+| ------------|---|:----------------------- | :------| :------|
+| LogiscisID |✔| 綠界訂單編號 | string(20) |  |
+| CVSPaymentNo |✔| 寄貨編號 | string(15) |  |
+| CVSValidationNo |✔| 驗證碼 | string(10) |  |
