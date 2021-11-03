@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.17](https://github.com/castion2293/ecpay-express/compare/v0.0.16...v0.0.17) (2021-11-03)
+
+
+### Bug Fixes
+
+* 完成取消訂單(7-EVEVEN 超商 C2C)([@nick](https://github.com/nick)) ([9fb7ab7](https://github.com/castion2293/ecpay-express/commit/9fb7ab7c06d29ea49e232f4e0ca036f73ce7b686))
+
 ### [0.0.16](https://github.com/castion2293/ecpay-express/compare/v0.0.15...v0.0.16) (2021-11-03)
 
 
