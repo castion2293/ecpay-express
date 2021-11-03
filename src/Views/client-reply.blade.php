@@ -21,13 +21,13 @@
             @if (isset($LogisticsType))
                 <tr>
                     <td class="table-active">物流類型</td>
-                    <td>{{ $LogisticsType }}</td>
+                    <td>{{ __("pharaoh_express::express.{$LogisticsType}", [], 'zh_TW') }}</td>
                 </tr>
             @endif
             @if (isset($LogisticsSubType))
                 <tr>
                     <td class="table-active">物流子類型</td>
-                    <td>{{ $LogisticsSubType }}</td>
+                    <td>{{ __("pharaoh_express::express.{$LogisticsSubType}", [], 'zh_TW') }}</td>
                 </tr>
             @endif
             @if (isset($ScheduledDeliveryDate))

@@ -13,9 +13,13 @@ class ExpressServiceProvider extends ServiceProvider
 
         $this->loadViewsFrom(__DIR__ . '/Views', 'pharaoh_express');
 
+        $this->loadTranslationsFrom(__DIR__ . '/Langs', 'pharaoh_express');
+
         $this->publishes(
             [
-                __DIR__ . '/../config/express.php' => config_path('express.php')
+                __DIR__ . '/../config/express.php' => config_path('express.php'),
+                __DIR__ . '/Views' => resource_path('views/express/client-reply'),
+                __DIR__ . '/Langs' => resource_path('lang/vendor/express')
             ],
             'express-config'
         );
