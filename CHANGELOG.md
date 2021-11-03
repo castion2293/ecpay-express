@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.15](https://github.com/castion2293/ecpay-express/compare/v0.0.14...v0.0.15) (2021-11-03)
+
+
+### Bug Fixes
+
+* 完成(B2C) 7-ELEVEN-更新出貨日、門市([@nick](https://github.com/nick)) ([eb2e2c8](https://github.com/castion2293/ecpay-express/commit/eb2e2c8da1839bc20ac6424f3f0759970430bc5b))
+
 ### [0.0.14](https://github.com/castion2293/ecpay-express/compare/v0.0.13...v0.0.14) (2021-11-03)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "ecpay-express",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "綠界物流服務",
   "main": "index.js",
   "scripts": {
