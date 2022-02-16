@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/castion2293/ecpay-express/compare/v1.0.0...v2.0.0) (2022-02-16)
+
+
+### Features
+
+* 升級至laravel9([@nick](https://github.com/nick)) ([f63b187](https://github.com/castion2293/ecpay-express/commit/f63b1876ec2a7bd59ea925ed10ce59bbc43888fa))
+
 ## [1.0.0](https://github.com/castion2293/ecpay-express/compare/v0.0.18...v1.0.0) (2021-11-03)
 
 
