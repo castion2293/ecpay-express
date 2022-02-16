@@ -37,7 +37,7 @@ class ExpressController extends BaseController
      * @return string
      * @throws \Pharaoh\Express\Exceptions\ExpressException
      */
-    public function printTradeDocument(Request $request):string
+    public function printTradeDocument(Request $request): string
     {
         return $this->expressService->printTradeDocument($request->all());
     }
